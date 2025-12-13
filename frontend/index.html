@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemical Safety Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">🧪 Chemical Safety Hub</h1>
+      <p class="tagline">Understanding everyday product safety</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      
+      <!-- Search Section -->
+      <section class="search-section">
+        <div class="search-card">
+          <h2>Search for a Product</h2>
+          <p class="subtitle">Get detailed safety information about everyday consumer products</p>
+          
+          <div class="search-container">
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Enter product name (e.g., Turmeric Powder, Olive Oil)"
+                autocomplete="off"
+              />
+              <div id="autocompleteList" class="autocomplete-list"></div>
+            </div>
+            
+            <button id="analyzeBtn" class="analyze-btn">
+              <span class="btn-text">Analyze with Gemini</span>
+            </button>
+          </div>
+
+          <!-- Loading Indicator -->
+          <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <p>Analyzing product safety...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Error Panel -->
+      <div id="errorPanel" class="error-panel" style="display: none;">
+        <div class="error-content">
+          <span class="error-icon">⚠️</span>
+          <p id="errorMessage"></p>
+          <button id="closeError" class="close-error">×</button>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <section id="resultsSection" class="results-section" style="display: none;">
+        <h2 class="results-title">Safety Analysis Results</h2>
+        
+        <!-- Product Summary -->
+        <div class="result-card">
+          <div class="card-header">
+            <span class="card-icon">📦</span>
+            <h3>Product Summary</h3>
+          </div>
+          <div class="card-content">
+            <p id="productSummary"></p>
+          </div>
+        </div>
+
+        <!-- Chemical Components -->
+        <div class="result-card">
+          <div class="card-header">
+            <span class="card-icon">🧪</span>
+            <h3>Common Chemical Components</h3>
+          </div>
+          <div class="card-content">
+            <p id="chemicalComponents"></p>
+          </div>
+        </div>
+
+        <!-- Safe Usage Guidelines -->
+        <div class="result-card">
+          <div class="card-header">
+            <span class="card-icon">✅</span>
+            <h3>Safe Usage Guidelines</h3>
+          </div>
+          <div class="card-content">
+            <p id="safeUsage"></p>
+          </div>
+        </div>
+
+        <!-- Effects of Improper Use -->
+        <div class="result-card">
+          <div class="card-header">
+            <span class="card-icon">⚠️</span>
+            <h3>Effects of Improper Use</h3>
+          </div>
+          <div class="card-content">
+            <p id="improperUse"></p>
+          </div>
+        </div>
+
+        <!-- Environmental Considerations -->
+        <div class="result-card">
+          <div class="card-header">
+            <span class="card-icon">🌱</span>
+            <h3>Environmental Considerations</h3>
+          </div>
+          <div class="card-content">
+            <p id="environmental"></p>
+          </div>
+        </div>
+
+        <!-- Search Again Button -->
+        <div class="search-again-container">
+          <button id="searchAgainBtn" class="search-again-btn">Search Another Product</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>⚠️ Educational purposes only. Not medical or regulatory advice.</p>
+      <p class="footer-note">Powered by Google Gemini AI</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="products.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
+
