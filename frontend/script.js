@@ -1,4 +1,5 @@
 import { PRODUCTS } from './products.js';
+import { GEMINI_API_KEY } from './config.js';
 
 // ===== DOM ELEMENTS =====
 const searchInput = document.getElementById('searchInput');
@@ -157,22 +158,64 @@ async function analyzeProduct() {
   analyzeBtn.disabled = true;
   
   try {
-    const response = await fetch('http://localhost:3000/api/analyze', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ productName })
-    });
+    // Call Gemini API directly from frontend
+    const prompt = `You are a chemical safety educator. Provide a clear, informative overview of "${productName}" for general consumers.
+
+Structure your response EXACTLY as follows with these section headers:
+
+## Product Summary
+[Provide a high-level description of the product and its purpose]
+
+## Common Chemical Components
+[List typical ingredients in simple terms - no chemical formulas, keep it educational and non-technical]
+
+## Safe Usage Guidelines
+[Explain proper everyday usage, storage, and handling]
+
+## Effects of Improper Use
+[Describe potential risks of misuse in a clear but non-alarming way]
+
+## Environmental Considerations
+[Discuss disposal, packaging impact, and eco-friendly aspects]
+
+Important guidelines:
+- Keep language simple and educational
+- Do not provide chemical formulas or synthesis instructions
+- Focus on consumer safety and awareness
+- Be factual but not alarmist
+- Keep each section to 2-4 sentences`;
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }]
+        })
+      }
+    );
     
     const data = await response.json();
     
     if (!response.ok) {
-      throw new Error(data.error || 'Failed to analyze product');
+      throw new Error(data.error?.message || 'Failed to analyze product');
     }
     
+    // Extract text from response
+    const text = data.candidates[0].content.parts[0].text;
+    
+    // Parse the response into structured sections
+    const sections = parseResponse(text);
+    
     // Display results
-    displayResults(data.data);
+    displayResults(sections);
     
   } catch (error) {
     console.error('Error:', error);
@@ -181,6 +224,40 @@ async function analyzeProduct() {
     loadingIndicator.style.display = 'none';
     analyzeBtn.disabled = false;
   }
+}
+
+// ===== PARSE RESPONSE =====
+function parseResponse(text) {
+  const sections = {
+    productSummary: '',
+    chemicalComponents: '',
+    safeUsage: '',
+    improperUse: '',
+    environmental: ''
+  };
+
+  // Split by headers
+  const parts = text.split('##').filter(part => part.trim());
+
+  parts.forEach(part => {
+    const lines = part.trim().split('\n');
+    const header = lines[0].toLowerCase();
+    const content = lines.slice(1).join('\n').trim();
+
+    if (header.includes('product summary')) {
+      sections.productSummary = content;
+    } else if (header.includes('chemical component')) {
+      sections.chemicalComponents = content;
+    } else if (header.includes('safe usage') || header.includes('usage guideline')) {
+      sections.safeUsage = content;
+    } else if (header.includes('improper use') || header.includes('effects')) {
+      sections.improperUse = content;
+    } else if (header.includes('environmental')) {
+      sections.environmental = content;
+    }
+  });
+
+  return sections;
 }
 
 // ===== DISPLAY RESULTS =====

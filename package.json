@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "description": "A web application that provides chemical safety information for everyday consumer products using Google Gemini AI",
   "type": "module",
-  "main": "backend/server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "node backend/server.js"
+    "start": "npx http-server . -p 8080 -o"
   },
   "keywords": [
     "chemical-safety",
@@ -17,10 +15,7 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "@google/genai": "^1.33.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.2"
+  "devDependencies": {
+    "http-server": "^14.1.1"
   }
 }
