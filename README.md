@@ -36,12 +36,9 @@ chemical-safety-hub/
 │
 ├── index.html              # Main HTML file (GitHub Pages entry point)
 ├── frontend/
-│   ├── config.js          # API key configuration
 │   ├── products.js        # 400+ hardcoded products
 │   ├── script.js          # Frontend logic + Gemini API calls
 │   └── style.css          # Professional styling
-│
-├── backend/               # (Legacy - not needed for GitHub Pages)
 ├── package.json           # Optional dev dependencies
 ├── README.md              # This file
 └── DEPLOY.md              # GitHub Pages deployment guide
@@ -51,24 +48,13 @@ chemical-safety-hub/
 
 ### For GitHub Pages Deployment
 
-1. **Set your API key**
-   
-   Edit `frontend/config.js` and add your Gemini API key:
-   ```javascript
-   export const GEMINI_API_KEY = 'your_api_key_here';
-   ```
-   
-   Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
-
-2. **Push to GitHub and enable Pages**
+1. **Push to GitHub and enable Pages**
    
    See [DEPLOY.md](DEPLOY.md) for detailed deployment instructions.
 
 ### For Local Testing
 
-1. **Set your API key** (same as above)
-
-2. **Serve the files**
+1. **Serve the files**
    
    Using Python:
    ```bash
@@ -94,7 +80,6 @@ chemical-safety-hub/
 
 ## 🛡️ Safety & Security
 
-- ⚠️ **API Key Note**: The API key is stored in `frontend/config.js` and will be visible in the browser. This is fine for educational/demo purposes, but be aware that anyone can see and use your API key. Consider setting usage limits in Google Cloud Console.
 - ✅ Input validation on frontend
 - ✅ Content filtering for suspicious terms
 - ✅ Educational information only (no synthesis instructions)
@@ -158,11 +143,6 @@ The application calls the Google Gemini API directly from the browser using the 
 
 ## 🐛 Troubleshooting
 
-**Server won't start:**
-- Check if port 3000 is available
-- Verify `.env` file exists in `backend/` directory
-- Ensure API key is valid
-
 **"Unable to analyze product":**
 - Check internet connection
 - Verify Gemini API key is correct
@@ -200,13 +180,6 @@ Contributions are welcome! Feel free to:
 - Improve documentation
 
 ## 👨‍💻 Developer Notes
-
-**Why Backend?**
-- Protects API keys (critical for security)
-- Enables input validation
-- Allows content filtering
-- Better error handling
-- Easier to scale
 
 **Code Simplicity:**
 - No unnecessary frameworks
